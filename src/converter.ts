@@ -7,31 +7,32 @@ export const roundToDecimal = (n: number, decimal: number) => {
   return Math.round(n * c) / c
 }
 
-export const rgbaToHsla = (red: number, green: number, blue: number, alpha: number = 1): Required<{ hue: number; saturation: number; lightness: number; alpha: number }> => {
-  ;(red = red / 255), (green = green / 255), (blue = blue / 255)
+export const rgbaToHsla = (red: number, green: number, blue: number, alpha = 1): Required<{ hue: number; saturation: number; lightness: number; alpha: number }> => {
+  (red = red / 255), (green = green / 255), (blue = blue / 255)
 
   const max: number = Math.max(red, green, blue),
     min: number = Math.min(red, green, blue)
 
-  let hue: number = 0,
+  let hue = 0,
     saturation: number,
     lightness: number = (max + min) / 2
 
   if (max === min) {
     /* achromatic */
     hue = saturation = 0
-  } else {
+  }
+  else {
     const dif: number = max - min
     saturation = dif / (1 - Math.abs(2 * lightness - 1))
     switch (max) {
-      case red:
-        hue = 60 * (((green - blue) / dif) % 6)
-        break
-      case green:
-        hue = 60 * ((blue - red) / dif + 2)
-        break
-      case blue:
-        hue = 60 * ((red - green) / dif + 4)
+    case red:
+      hue = 60 * (((green - blue) / dif) % 6)
+      break
+    case green:
+      hue = 60 * ((blue - red) / dif + 2)
+      break
+    case blue:
+      hue = 60 * ((red - green) / dif + 4)
     }
   }
 
@@ -42,7 +43,7 @@ export const rgbaToHsla = (red: number, green: number, blue: number, alpha: numb
   return { hue, saturation, lightness, alpha }
 }
 
-export const rgbaToHex = (red: number, green: number, blue: number, alpha: number = 1): string => {
+export const rgbaToHex = (red: number, green: number, blue: number, alpha = 1): string => {
   const toHex = (value: number): string => {
     const hexString = (Math.round(value) % 256).toString(16)
     return hexString.length === 1 ? '0' + hexString : hexString
@@ -53,7 +54,7 @@ export const rgbaToHex = (red: number, green: number, blue: number, alpha: numbe
   return hex
 }
 
-export const hslaToRgba = (hue: number, saturation: number, lightness: number, alpha: number = 1): Required<{ red: number; green: number; blue: number; alpha: number }> => {
+export const hslaToRgba = (hue: number, saturation: number, lightness: number, alpha = 1): Required<{ red: number; green: number; blue: number; alpha: number }> => {
   const s = positivModulo(saturation, 101) / 100
   const l = positivModulo(lightness, 101) / 100
   const h = positivModulo(hue, 361)
@@ -65,13 +66,17 @@ export const hslaToRgba = (hue: number, saturation: number, lightness: number, a
   let { red, green, blue } = (() => {
     if (h >= 0 && h < 60) {
       return { red: c, green: x, blue: 0 }
-    } else if (h >= 60 && h < 120) {
+    }
+    else if (h >= 60 && h < 120) {
       return { red: x, green: c, blue: 0 }
-    } else if (h >= 120 && h < 180) {
+    }
+    else if (h >= 120 && h < 180) {
       return { red: 0, green: c, blue: x }
-    } else if (h >= 180 && h < 240) {
+    }
+    else if (h >= 180 && h < 240) {
       return { red: 0, green: x, blue: c }
-    } else if (h >= 240 && h < 300) {
+    }
+    else if (h >= 240 && h < 300) {
       return { red: x, green: 0, blue: c }
     }
 
@@ -85,7 +90,7 @@ export const hslaToRgba = (hue: number, saturation: number, lightness: number, a
   return { red, green, blue, alpha }
 }
 
-export const hslaToHex = (hue: number, saturation: number, lightness: number, alpha: number = 1): string => {
+export const hslaToHex = (hue: number, saturation: number, lightness: number, alpha = 1): string => {
   const { red, green, blue } = hslaToRgba(hue, saturation, lightness)
   return rgbaToHex(red, green, blue, alpha)
 }
@@ -95,7 +100,7 @@ export const hexToRgba = (hex: number): Required<{ red: number; green: number; b
   const hexString = hex.toString(16)
   for (let i = 0; i < hexString.length; i += 2) {
     hexArray.push(hexString.substring(i, i + 2))
-    if (i >= 8) break
+    if (i >= 8) {break}
   }
 
   const rgb: Array<number> = []

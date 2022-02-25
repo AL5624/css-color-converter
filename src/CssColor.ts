@@ -1,7 +1,7 @@
-import { rgbaToHsla, hslaToRgba, rgbaToHex, roundToDecimal } from './numberConverter'
+import { rgbaToHsla, hslaToRgba, rgbaToHex, roundToDecimal } from './converter'
 
 const error = (type: string, value: string): string => {
-  return `cannot parse ${type} \"${value}\" to CssColor")`
+  return `cannot parse ${type} "${value}" to CssColor")`
 }
 
 const hexStringToCssColor = (hex: string): CssColor => {
@@ -28,10 +28,10 @@ const hslaStringToCssColor = (hsla: string): CssColor => {
 
   if (!result) throw error('hsla', hsla)
 
-  const h: number = Number(result[1])
-  const s: number = Number(result[2])
-  const l: number = Number(result[3])
-  const a: number = Number(result[4])
+  const h = Number(result[1])
+  const s = Number(result[2])
+  const l = Number(result[3])
+  const a = Number(result[4])
 
   return hslaToCssColor(h, s, l, a)
 }
@@ -39,11 +39,11 @@ const hslaStringToCssColor = (hsla: string): CssColor => {
 const hslStringToCssColor = (hsl: string): CssColor => {
   const result = CssColor.hslRegExp.exec(hsl)
 
-  if (!result) throw error('hsl', hsl)
+  if (!result) {throw error('hsl', hsl)}
 
-  const h: number = Number(result[1])
-  const s: number = Number(result[2])
-  const l: number = Number(result[3])
+  const h = Number(result[1])
+  const s = Number(result[2])
+  const l = Number(result[3])
 
   return hslaToCssColor(h, s, l)
 }
@@ -53,10 +53,10 @@ const rgbaStringToCssColor = (rgba: string): CssColor => {
 
   if (!result) throw error('rgba', rgba)
 
-  const r: number = Number(result[1])
-  const g: number = Number(result[2])
-  const b: number = Number(result[3])
-  const a: number = Number(result[4])
+  const r = Number(result[1])
+  const g = Number(result[2])
+  const b = Number(result[3])
+  const a = Number(result[4])
 
   return rgbaToCssColor(r, g, b, a)
 }
@@ -66,30 +66,30 @@ const rgbStringToCssColor = (rgb: string): CssColor => {
 
   if (!result) throw error('rgb', rgb)
 
-  const r: number = Number(result[1])
-  const g: number = Number(result[2])
-  const b: number = Number(result[3])
+  const r = Number(result[1])
+  const g = Number(result[2])
+  const b = Number(result[3])
 
   return rgbaToCssColor(r, g, b)
 }
 
-export const hslaToCssColor = (hue: number, saturation: number, lightness: number, alpha: number = 1): CssColor => {
+export const hslaToCssColor = (hue: number, saturation: number, lightness: number, alpha = 1): CssColor => {
   const { red, green, blue } = hslaToRgba(hue, saturation, lightness)
   return new CssColor({ red, green, blue }, { hue, saturation, lightness }, alpha)
 }
 
-export const rgbaToCssColor = (red: number, green: number, blue: number, alpha: number = 1): CssColor => {
+export const rgbaToCssColor = (red: number, green: number, blue: number, alpha = 1): CssColor => {
   const { hue, saturation, lightness } = rgbaToHsla(red, green, blue)
 
   return new CssColor({ red, green, blue }, { hue, saturation, lightness }, alpha)
 }
 
 export class CssColor {
-  public static hexRegExp: RegExp = new RegExp('^#?([0-9a-fd]{2})([0-9a-fd]{1,2})([0-9a-fd]{0,2})([0-9a-fd]{0,2})$', 'i')
-  public static rgbRegExp: RegExp = new RegExp('^rgb\\(([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+)\\)$', 'i')
-  public static rgbaRegExp: RegExp = new RegExp('^rgba\\(([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+)\\)$', 'i')
-  public static hslRegExp: RegExp = new RegExp('^hsl\\(([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+)%,([0-9]*.[0-9]+|[0-9]+)%\\)$', 'i')
-  public static hslaRegExp: RegExp = new RegExp('^hsla\\(([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+)%,([0-9]*.[0-9]+|[0-9]+)%,([0-9]*.[0-9]+|[0-9]+)\\)$', 'i')
+  public static hexRegExp = new RegExp('^#?([0-9a-fd]{2})([0-9a-fd]{1,2})([0-9a-fd]{0,2})([0-9a-fd]{0,2})$', 'i')
+  public static rgbRegExp = new RegExp('^rgb\\(([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+)\\)$', 'i')
+  public static rgbaRegExp = new RegExp('^rgba\\(([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+)\\)$', 'i')
+  public static hslRegExp = new RegExp('^hsl\\(([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+)%?,([0-9]*.[0-9]+|[0-9]+)%?\\)$', 'i')
+  public static hslaRegExp = new RegExp('^hsla\\(([0-9]*.[0-9]+|[0-9]+),([0-9]*.[0-9]+|[0-9]+)%?,([0-9]*.[0-9]+|[0-9]+)%?,([0-9]*.[0-9]+|[0-9]+)\\)$', 'i')
 
   public static getInstanceFromString(value: string): CssColor | null {
     value = value.split(' ').join('')
@@ -98,15 +98,20 @@ export class CssColor {
     try {
       if (value.match(CssColor.hexRegExp)) {
         cssColor = hexStringToCssColor(value)
-      } else if (value.match(/^rgb\(/)) {
+      }
+      else if (value.match(/^rgb\(/)) {
         cssColor = rgbStringToCssColor(value)
-      } else if (value.match(/^rgba\(/)) {
+      }
+      else if (value.match(/^rgba\(/)) {
         cssColor = rgbaStringToCssColor(value)
-      } else if (value.match(/^hsl\(/)) {
+      }
+      else if (value.match(/^hsl\(/)) {
         cssColor = hslStringToCssColor(value)
-      } else if (value.match(/^hsla\(/)) {
+      }
+      else if (value.match(/^hsla\(/)) {
         cssColor = hslaStringToCssColor(value)
-      } else if (document && window) {
+      }
+      else if (document && window) {
         const div = document.createElement('div')
         document.body.appendChild(div)
         div.style.color = value
@@ -115,7 +120,8 @@ export class CssColor {
         cssColor.htmlColorName = value
         document.body.removeChild(div)
       }
-    } catch (e) {
+    }
+    catch (e) {
       // tslint:disable-next-line: no-console
       console.warn(e)
     }
@@ -126,9 +132,9 @@ export class CssColor {
   public constructor(
     rgb: Partial<{ red: number; green: number; blue: number }>,
     hsl: Partial<{ hue: number; saturation: number; lightness: number }>,
-    alpha: number = 1,
-    hex: string = '',
-    htmlColorName: string = ''
+    alpha = 1,
+    hex = '',
+    htmlColorName = ''
   ) {
     Object.assign(this, rgb)
     Object.assign(this, hsl)
@@ -137,22 +143,22 @@ export class CssColor {
     this.htmlColorName = htmlColorName
   }
 
-  public htmlColorName: string = ''
-  public hexString: string = ''
+  public htmlColorName = ''
+  public hexString = ''
 
   public toHexString(): string {
     return this.hexString
   }
 
-  public red: number = 0
-  public green: number = 0
-  public blue: number = 0
+  public red = 0
+  public green = 0
+  public blue = 0
 
-  public hue: number = 0
-  public saturation: number = 100
-  public lightness: number = 50
+  public hue = 0
+  public saturation = 100
+  public lightness = 50
 
-  public alpha: number = 1
+  public alpha = 1
 
   public getRgba(): Required<{ red: number; green: number; blue: number; alpha: number }> {
     const { red, green, blue, alpha } = this
@@ -197,10 +203,6 @@ export class CssColor {
   }
 
   public getStrings(): Array<string> {
-    const colors = [this.rgbString, this.rgbaString, this.hslString, this.hslaString, this.hexString]
-    if (this.htmlColorName) {
-      colors.push(this.htmlColorName)
-    }
-    return colors
+    return [ this.rgbString, this.rgbaString, this.hslString, this.hslaString, this.hexString, this.htmlColorName ]
   }
 }

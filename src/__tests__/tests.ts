@@ -1,4 +1,4 @@
-import { rgbaToHsla, hslaToRgba, rgbaToHex } from '../numberConverter'
+import { rgbaToHsla, hslaToRgba, rgbaToHex } from '../converter'
 import { CssColor } from '../CssColor'
 
 const testData = [
@@ -19,23 +19,28 @@ const f = (string: string | undefined, expected: string, i: number) => {
       if (Number.isNaN(Number(string.charAt(j)))) {
         if (code > 97) {
           expect(code).toBeGreaterThanOrEqual(expected.charCodeAt(j) - roundingErrorHex)
-        } else {
+        }
+        else {
           expect(code).toBeGreaterThanOrEqual(expected.charCodeAt(j))
         }
         if (code < 102) {
           expect(code).toBeLessThanOrEqual(expected.charCodeAt(j) + roundingErrorHex)
-        } else {
+        }
+        else {
           expect(code).toBeLessThanOrEqual(expected.charCodeAt(j))
         }
-      } else {
+      }
+      else {
         if (code > 48) {
           expect(code).toBeGreaterThanOrEqual(expected.charCodeAt(j) - roundingErrorHex)
-        } else {
+        }
+        else {
           expect(code).toBeGreaterThanOrEqual(expected.charCodeAt(j))
         }
         if (code < 57) {
           expect(code).toBeLessThanOrEqual(expected.charCodeAt(j) + roundingErrorHex)
-        } else {
+        }
+        else {
           expect(code).toBeLessThanOrEqual(expected.charCodeAt(j))
         }
       }
@@ -43,7 +48,7 @@ const f = (string: string | undefined, expected: string, i: number) => {
   }
 }
 
-for (let i: number = 0; i < testData.length; i++) {
+for (let i = 0; i < testData.length; i++) {
   const { rgb, hsl } = testData[i]
   const result = rgbaToHsla(rgb.red, rgb.green, rgb.blue)
 
@@ -69,7 +74,7 @@ for (let i: number = 0; i < testData.length; i++) {
   f(hex, testData[i].hex + testData[i].hexAlpha, i)
 }
 
-for (let i: number = 0; i < testData.length; i++) {
+for (let i = 0; i < testData.length; i++) {
   const { rgb, hsl, hex, hexAlpha, alpha } = testData[i]
   const result = hslaToRgba(hsl.hue, hsl.saturation, hsl.lightness)
 

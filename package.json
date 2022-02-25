@@ -1,7 +1,7 @@
 {
-  "name": "css-color-converter",
+  "name": "css-color-converter-class",
   "version": "1.0.0",
-  "description": "Converts a css color to the values rga(a) and hsl(a) and hex.",
+  "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -25,7 +25,7 @@
     "converter",
     "html"
   ],
-  "author": "Anton-Luis Bertram",
+  "author": "AL",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AL5624/css-color-converter/issues"

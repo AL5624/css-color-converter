@@ -1,6 +1,6 @@
 {
   "name": "css-color-converter-class",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -22,7 +22,8 @@
     "css",
     "color",
     "converter",
-    "html"
+    "html",
+    "class"
   ],
   "author": "AL",
   "license": "ISC",

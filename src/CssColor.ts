@@ -130,8 +130,8 @@ export class CssColor {
   }
 
   public constructor(
-    rgb: Partial<{ red: number; green: number; blue: number }>,
-    hsl: Partial<{ hue: number; saturation: number; lightness: number }>,
+    rgb?: Partial<{ red: number; green: number; blue: number }>,
+    hsl?: Partial<{ hue: number; saturation: number; lightness: number }>,
     alpha = 1,
     hex = '',
     htmlColorName = ''

@@ -189,7 +189,7 @@ export class CssColor {
 
   public htmlColorName = ''
   /**
-   * sets htmlColorName to the new value and re-calculates "hsl-values", "rgb-values" and "alpha" (if correct string)
+   * sets htmlColorName to the new value and re-calculates "hsl-values", "rgb-values" and "alpha" (if valid string)
    */
   public setHtmlColorName(value: string) {
     this.htmlColorName = value
